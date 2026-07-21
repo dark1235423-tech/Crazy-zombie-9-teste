@@ -2,39 +2,141 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Crazy Zombie 9</title>
 
 <script src="https://unpkg.com/@ruffle-rs/ruffle"></script>
 
 <style>
-body{
+
+*{
     margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+
     background:#000;
+    width:100vw;
+    height:100vh;
+
     display:flex;
     justify-content:center;
     align-items:center;
-    height:100vh;
+
+    overflow:hidden;
+
+    font-family:Arial, Helvetica, sans-serif;
+
 }
+
+#container{
+
+    position:relative;
+
+    width:100vw;
+    height:100vh;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+}
+
+#game{
+
+    aspect-ratio:940 / 800;
+
+    width:min(100vw,117.5vh);
+    height:auto;
+
+    max-width:100%;
+    max-height:100%;
+
+}
+
+#fullscreen{
+
+    position:absolute;
+
+    right:20px;
+    bottom:20px;
+
+    padding:12px 22px;
+
+    border:none;
+
+    border-radius:8px;
+
+    cursor:pointer;
+
+    background:#202020;
+
+    color:white;
+
+    font-size:16px;
+
+    transition:.2s;
+
+}
+
+#fullscreen:hover{
+
+    background:#3a3a3a;
+
+}
+
 </style>
 
 </head>
 
 <body>
 
-<div id="game"></div>
+<div id="container">
+
+    <div id="game"></div>
+
+    <button id="fullscreen">
+        Tela Cheia
+    </button>
+
+</div>
 
 <script>
+
+window.RufflePlayer = window.RufflePlayer || {};
+
 window.addEventListener("load", () => {
+
     const ruffle = window.RufflePlayer.newest();
+
     const player = ruffle.createPlayer();
 
-    player.style.width = "960px";
-    player.style.height = "540px";
+    player.style.width = "100%";
+    player.style.height = "100%";
 
     document.getElementById("game").appendChild(player);
 
     player.load("Crazy Zombie 9.0.swf");
+
 });
+
+document.getElementById("fullscreen").onclick = () => {
+
+    if(document.fullscreenElement){
+
+        document.exitFullscreen();
+
+    }else{
+
+        document.documentElement.requestFullscreen();
+
+    }
+
+};
+
 </script>
 
 </body>
