@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Crazy Zombie 9</title>
+
+<script src="https://unpkg.com/@ruffle-rs/ruffle"></script>
+
+<style>
+body{
+    margin:0;
+    background:#000;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+}
+</style>
+
+</head>
+
+<body>
+
+<div id="game"></div>
+
+<script>
+window.addEventListener("load", () => {
+    const ruffle = window.RufflePlayer.newest();
+    const player = ruffle.createPlayer();
+
+    player.style.width = "960px";
+    player.style.height = "540px";
+
+    document.getElementById("game").appendChild(player);
+
+    player.load("Crazy Zombie 9.0.swf");
+});
+</script>
+
+</body>
+</html>
