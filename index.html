@@ -1,316 +1,47 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Crazy Zombie 9</title>
-<script src="https://unpkg.com/@ruffle-rs/ruffle"></script>
-<style>
-*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html,body{
-  margin:0;padding:0;width:100%;height:100%;
-  background:#000;overflow:hidden;touch-action:none;
-  font-family:Arial,sans-serif;
-}
-button{font:inherit}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-/* ===== TELA DE SELEÇÃO ===== */
-#modeScreen{
-  position:fixed;inset:0;z-index:10000;background:#111;
-  display:flex;align-items:center;justify-content:center;
-}
-#modeBox{text-align:center;color:#fff}
-#modeBox h1{font-size:26px;margin:0 0 28px}
-.modeBtn{
-  display:block;width:260px;margin:14px auto;padding:18px;
-  border:2px solid #777;border-radius:12px;
-  background:#252525;color:#fff;font-size:20px;font-weight:bold;
-}
-.modeBtn:active{background:#555}
+    <title>Crazy Zombie 9</title>
 
-/* ===== ÁREA DO JOGO ===== */
-#game{
-  position:absolute;
-  left:50%;
-  top:50%;
-  transform:translate(-50%,-50%);
-  width:940px;
-  height:800px;
-  background:#000;
-}
-ruffle-player{
-  width:100%;
-  height:100%;
-  display:block;
-}
+    <script src="https://unpkg.com/@ruffle-rs/ruffle"></script>
 
-/* ===== HUD MOBILE ===== */
-#mobileHUD{
-  display:none;
-  position:fixed;inset:0;z-index:9000;
-  pointer-events:none;touch-action:none;
-}
-#joystick{
-  position:absolute;left:30px;bottom:25px;
-  width:180px;height:180px;
-  border:3px solid rgba(255,255,255,.45);border-radius:50%;
-  background:rgba(0,0,0,.35);pointer-events:auto;
-}
-#stick{
-  position:absolute;left:47px;top:47px;
-  width:80px;height:80px;border-radius:50%;
-  background:rgba(210,210,210,.75);
-  border:3px solid rgba(255,255,255,.55);
-  pointer-events:none; /* o stick não captura toque */
-  z-index:1;
-}
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            background: #111;
+            overflow: auto;
+        }
 
-/* Setas agora são botões clicáveis */
-.arrow{
-  position:absolute;
-  color:#fff;
-  font-size:26px;
-  opacity:.85;
-  width:50px;
-  height:50px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  border-radius:50%;
-  z-index:2;
-  user-select:none;
-}
-.arrow:active{
-  background:rgba(255,255,255,.25);
-  opacity:1;
-}
-.up{top:4px;left:65px}
-.down{bottom:4px;left:65px}
-.left{left:4px;top:65px}
-.right{right:4px;top:65px}
+        #game {
+            width: 940px;
+            height: 800px;
+            transform: scale(1.5);
+            transform-origin: top left;
+        }
 
-#keyToggle{
-  position:absolute;right:22px;bottom:205px;
-  padding:12px 18px;border:2px solid #888;border-radius:10px;
-  background:rgba(15,15,15,.85);color:#fff;font-weight:bold;
-  pointer-events:auto;
-}
-#keys{
-  display:none;position:absolute;right:20px;bottom:25px;
-  width:285px;grid-template-columns:repeat(3,80px);gap:9px;
-  pointer-events:auto;
-}
-#keys.show{display:grid}
-.key{
-  width:80px;height:62px;border:3px solid #aaa;border-radius:11px;
-  background:linear-gradient(#fff,#d5d5d5);color:#9b0000;
-  font-size:22px;font-weight:bold;box-shadow:0 4px 0 #666;
-}
-.key:active{transform:translateY(4px);box-shadow:0 0 0 #666}
-
-#backBtn,#pcBack{
-  padding:9px 14px;border:2px solid #888;border-radius:9px;
-  background:rgba(0,0,0,.75);color:#fff;font-weight:bold;
-}
-#backBtn{position:absolute;right:22px;top:20px;pointer-events:auto}
-#pcBack{display:none;position:fixed;right:15px;top:15px;z-index:9500}
-
-body.mobile #mobileHUD{display:block}
-body.desktop #pcBack{display:block}
-</style>
+        ruffle-player {
+            width: 940px;
+            height: 800px;
+            display: block;
+        }
+    </style>
 </head>
+
 <body>
 
-<!-- TELA DE SELEÇÃO -->
-<div id="modeScreen">
-  <div id="modeBox">
-    <h1>Como você quer jogar?</h1>
-    <button class="modeBtn" id="mobileBtn">📱 CELULAR</button>
-    <button class="modeBtn" id="desktopBtn">🖥️ COMPUTADOR</button>
-  </div>
-</div>
+    <div id="game">
+        <ruffle-player
+            src="Crazy-zombie-9.0.swf"
+            width="940"
+            height="800">
+        </ruffle-player>
+    </div>
 
-<!-- JOGO -->
-<div id="game">
-  <ruffle-player src="Crazy-zombie-9.0.swf" width="940" height="800"></ruffle-player>
-</div>
-
-<button id="pcBack">MENU</button>
-
-<!-- HUD MOBILE -->
-<div id="mobileHUD">
-  <button id="backBtn">MENU</button>
-
-  <div id="joystick">
-    <!-- Setas agora enviam W A S D ao tocar -->
-    <div class="arrow up" data-key="w">▲</div>
-    <div class="arrow down" data-key="s">▼</div>
-    <div class="arrow left" data-key="a">◀</div>
-    <div class="arrow right" data-key="d">▶</div>
-    <div id="stick"></div>
-  </div>
-
-  <button id="keyToggle">TECLAS</button>
-  <div id="keys">
-    <button class="key" data-key="u">U</button>
-    <button class="key" data-key="i">I</button>
-    <button class="key" data-key="o">O</button>
-    <button class="key" data-key="j">J</button>
-    <button class="key" data-key="k">K</button>
-    <button class="key" data-key="l">L</button>
-  </div>
-</div>
-
-<script>
-const modeScreen = document.getElementById("modeScreen");
-const game       = document.getElementById("game");
-const keys       = document.getElementById("keys");
-
-function fitGame(isMobile) {
-  const scale = Math.min(window.innerWidth / 940, window.innerHeight / 800);
-
-  if (isMobile || window.innerWidth < 940 || window.innerHeight < 800) {
-    game.style.width  = Math.floor(940 * scale) + "px";
-    game.style.height = Math.floor(800 * scale) + "px";
-  } else {
-    game.style.width  = "940px";
-    game.style.height = "800px";
-  }
-  game.style.transform = "translate(-50%, -50%)";
-}
-
-function mobileMode() {
-  document.body.className = "mobile";
-  modeScreen.style.display = "none";
-  fitGame(true);
-}
-
-function desktopMode() {
-  document.body.className = "desktop";
-  modeScreen.style.display = "none";
-  fitGame(false);
-}
-
-function openMenu() {
-  document.body.className = "";
-  modeScreen.style.display = "flex";
-  keys.classList.remove("show");
-  document.getElementById("keyToggle").textContent = "TECLAS";
-}
-
-document.getElementById("mobileBtn").onclick = mobileMode;
-document.getElementById("desktopBtn").onclick = desktopMode;
-document.getElementById("backBtn").onclick = openMenu;
-document.getElementById("pcBack").onclick = openMenu;
-
-window.addEventListener("resize", () => {
-  if (document.body.classList.contains("mobile")) fitGame(true);
-  else if (document.body.classList.contains("desktop")) fitGame(false);
-});
-
-/* ===== Enviar teclas ===== */
-function keyDown(k) {
-  window.dispatchEvent(new KeyboardEvent("keydown", {
-    key: k,
-    code: "Key" + k.toUpperCase(),
-    bubbles: true,
-    cancelable: true
-  }));
-}
-function keyUp(k) {
-  window.dispatchEvent(new KeyboardEvent("keyup", {
-    key: k,
-    code: "Key" + k.toUpperCase(),
-    bubbles: true,
-    cancelable: true
-  }));
-}
-
-/* Botão mostrar/esconder teclas UIOJKL */
-document.getElementById("keyToggle").onclick = () => {
-  keys.classList.toggle("show");
-  document.getElementById("keyToggle").textContent =
-    keys.classList.contains("show") ? "ESCONDER" : "TECLAS";
-};
-
-/* Teclas U I O J K L */
-document.querySelectorAll(".key").forEach(btn => {
-  const k = btn.dataset.key;
-  btn.addEventListener("touchstart", e => { e.preventDefault(); keyDown(k); }, {passive:false});
-  btn.addEventListener("touchend",   e => { e.preventDefault(); keyUp(k); }, {passive:false});
-  btn.addEventListener("touchcancel", () => keyUp(k));
-});
-
-/* ===== Setas do joystick (W A S D) ===== */
-document.querySelectorAll(".arrow").forEach(arrow => {
-  const k = arrow.dataset.key;
-  arrow.addEventListener("touchstart", e => {
-    e.preventDefault();
-    e.stopPropagation(); // não deixa o joystick analógico interferir
-    keyDown(k);
-  }, {passive:false});
-  arrow.addEventListener("touchend", e => {
-    e.preventDefault();
-    e.stopPropagation();
-    keyUp(k);
-  }, {passive:false});
-  arrow.addEventListener("touchcancel", () => keyUp(k));
-});
-
-/* ===== Joystick analógico (arrastar) ===== */
-const joystick = document.getElementById("joystick");
-const stick    = document.getElementById("stick");
-let joyKeys = [];
-
-function releaseJoy() {
-  joyKeys.forEach(keyUp);
-  joyKeys = [];
-  stick.style.left = "47px";
-  stick.style.top  = "47px";
-}
-
-function moveJoy(x, y) {
-  const r  = joystick.getBoundingClientRect();
-  const cx = r.left + r.width / 2;
-  const cy = r.top  + r.height / 2;
-  let dx = x - cx, dy = y - cy;
-  const d = Math.hypot(dx, dy), max = 52;
-  if (d > max) { dx = dx/d*max; dy = dy/d*max; }
-
-  stick.style.left = (47 + dx) + "px";
-  stick.style.top  = (47 + dy) + "px";
-
-  let n = [];
-  if (dx < -22) n.push("a");
-  if (dx >  22) n.push("d");
-  if (dy < -22) n.push("w");
-  if (dy >  22) n.push("s");
-
-  joyKeys.filter(k => !n.includes(k)).forEach(keyUp);
-  n.filter(k => !joyKeys.includes(k)).forEach(keyDown);
-  joyKeys = n;
-}
-
-joystick.addEventListener("touchstart", e => {
-  // Só move o stick se não clicou numa seta
-  if (e.target.classList.contains("arrow")) return;
-  e.preventDefault();
-  moveJoy(e.touches[0].clientX, e.touches[0].clientY);
-}, {passive:false});
-
-joystick.addEventListener("touchmove", e => {
-  if (e.target.classList.contains("arrow")) return;
-  e.preventDefault();
-  moveJoy(e.touches[0].clientX, e.touches[0].clientY);
-}, {passive:false});
-
-joystick.addEventListener("touchend", e => {
-  if (e.target.classList.contains("arrow")) return;
-  e.preventDefault();
-  releaseJoy();
-}, {passive:false});
-
-joystick.addEventListener("touchcancel", releaseJoy);
-</script>
 </body>
 </html>
